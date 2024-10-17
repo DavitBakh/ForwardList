@@ -21,6 +21,7 @@ private:
 
 public:
 	ForwardList(size_t size = 0, const T& val = T{});
+	~ForwardList();
 
 	bool empty() const;
 	T& front();
@@ -52,6 +53,18 @@ ForwardList<T>::ForwardList(size_t size, const T& val)
 		curr = curr->_next;
 	}
 }
+
+template<typename T>
+ForwardList<T>::~ForwardList()
+{
+	while (_head != nullptr)
+	{
+		Node* temp = _head->_next;
+		delete _head;
+		_head = temp;
+	}
+}
+
 
 #pragma endregion
 
