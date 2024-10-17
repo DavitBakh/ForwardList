@@ -27,6 +27,7 @@ public:
 	const T& front() const;
 
 	void push_front(const T& val);
+	void pop_front() noexcept;
 };
 
 #pragma region Ctors
@@ -45,7 +46,7 @@ ForwardList<T>::ForwardList(size_t size, const T& val)
 
 	_head = new Node(val, nullptr);
 	Node* curr = _head;
-	for (size_t i = 0; i < size; i++)
+	for (size_t i = 1; i < size; i++)
 	{
 		curr->_next = new Node(val);
 		curr = curr->_next;
@@ -80,4 +81,14 @@ void ForwardList<T>::push_front(const T& val)
 {
 	_head = new Node(val, _head);
 }
+
+template<typename T>
+void ForwardList<T>::pop_front() noexcept
+{
+	Node* temp = _head;
+	_head = _head->_next;
+
+	delete temp;
+}
+
 #pragma endregion
