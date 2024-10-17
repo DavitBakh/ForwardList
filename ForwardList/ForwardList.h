@@ -25,6 +25,8 @@ public:
 	bool empty() const;
 	T& front();
 	const T& front() const;
+
+	void push_front(const T& val);
 };
 
 #pragma region Ctors
@@ -73,4 +75,9 @@ const T& ForwardList<T>::front() const
 	return _head->_val;
 }
 
+template<typename T>
+void ForwardList<T>::push_front(const T& val)
+{
+	_head = new Node(val, _head);
+}
 #pragma endregion
