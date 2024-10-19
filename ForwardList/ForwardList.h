@@ -2,6 +2,7 @@
 
 #include <cstddef>
 #include <utility>
+#include <initializer_list>
 
 template <typename T>
 class ForwardList
@@ -22,6 +23,7 @@ private:
 public:
 	ForwardList(size_t size = 0, const T& val = T());
 	ForwardList(const ForwardList& source);
+	ForwardList(std::initializer_list<T> initList);
 	~ForwardList();
 
 	bool empty() const;
@@ -76,6 +78,19 @@ ForwardList<T>::ForwardList(const ForwardList& source)
 		sourceNode = sourceNode->_next;
 	}
 
+}
+
+template <typename T>
+ForwardList<T>::ForwardList(std::initializer_list<T> initList)
+{
+	_head = nullptr;
+
+	Node** curNode = &_head;
+	for (auto iter = initList.begin(); iter != initList.end(); ++iter)
+	{
+		*curNode = new Node(*iter);
+		curNode = &(*curNode)->_next;
+	}
 }
 
 template<typename T>
