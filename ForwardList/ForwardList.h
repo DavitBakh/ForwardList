@@ -14,21 +14,26 @@ private:
 
 		//???
 		Node(const T& val, Node* next = nullptr);
-
 	};
 
 	Node* _head;
 
 public:
 	ForwardList(size_t size = 0, const T& val = T{});
+	ForwardList(const ForwardList& source);
 	~ForwardList();
 
 	bool empty() const;
+
 	T& front();
 	const T& front() const;
 
 	void push_front(const T& val);
 	void pop_front() noexcept;
+
+
+	template <typename U>
+	friend bool operator==(const ForwardList<U>& lhs, const ForwardList<U>& rhs);
 };
 
 #pragma region Ctors
@@ -52,6 +57,30 @@ ForwardList<T>::ForwardList(size_t size, const T& val)
 		curr->_next = new Node(val);
 		curr = curr->_next;
 	}
+}
+
+template<typename T>
+ForwardList<T>::ForwardList(const ForwardList& source)
+{
+	if (source._head == nullptr)
+	{
+		_head = nullptr;
+
+		return;
+	}
+
+	this->_head = new Node(source._head->_val);
+
+	Node* temp = source._head->_next;
+	Node* ths = _head;
+	while (temp != nullptr)
+	{
+		ths->_next = new Node(temp->_val);
+		temp = temp->_next;
+		ths = ths->_next;
+	}
+
+
 }
 
 template<typename T>
@@ -102,6 +131,34 @@ void ForwardList<T>::pop_front() noexcept
 	_head = _head->_next;
 
 	delete temp;
+}
+
+#pragma endregion
+
+#pragma region Bool operators
+
+template<typename T>
+bool operator==(const ForwardList<T>& lhs, const ForwardList<T>& rhs)
+{
+	typename ForwardList<T>::Node* lhsP = lhs._head;
+	typename ForwardList<T>::Node* rhsP = rhs._head;
+
+	while (lhsP != nullptr && rhsP != nullptr)
+	{
+		if (lhsP->_val != rhsP->_val)
+			return false;
+
+		lhsP = lhsP->_next;
+		rhsP = rhsP->_next;
+	}
+
+	return lhsP == rhsP;
+}
+
+template<typename T>
+bool operator!=(const ForwardList<T>& lhs, const ForwardList<T>& rhs)
+{
+	return !(lhs == rhs);
 }
 
 #pragma endregion
