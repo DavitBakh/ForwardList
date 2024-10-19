@@ -31,6 +31,7 @@ public:
 	void push_front(const T& val);
 	void pop_front() noexcept;
 
+	ForwardList& operator=(const ForwardList& source);
 
 	template <typename U>
 	friend bool operator==(const ForwardList<U>& lhs, const ForwardList<U>& rhs);
@@ -45,6 +46,7 @@ ForwardList<T>::Node::Node(const T& val, Node* next) : _val(val), _next(next) { 
 template<typename T>
 ForwardList<T>::ForwardList(size_t size, const T& val)
 {
+	_head = nullptr;
 
 	Node** curNode = &_head;
 	for (std::size_t i = 0; i < size; i++)
@@ -58,6 +60,8 @@ ForwardList<T>::ForwardList(size_t size, const T& val)
 template<typename T>
 ForwardList<T>::ForwardList(const ForwardList& source)
 {
+	_head = nullptr;
+
 	Node** curNode = &_head;
 	Node* sourceNode = source._head;
 
@@ -122,7 +126,7 @@ void ForwardList<T>::pop_front() noexcept
 
 #pragma endregion
 
-#pragma region Bool operators
+#pragma region Operators
 
 template<typename T>
 bool operator==(const ForwardList<T>& lhs, const ForwardList<T>& rhs)
@@ -146,6 +150,26 @@ template<typename T>
 bool operator!=(const ForwardList<T>& lhs, const ForwardList<T>& rhs)
 {
 	return !(lhs == rhs);
+}
+
+template<typename T>
+ForwardList<T>& ForwardList<T>::operator=(const ForwardList& source)
+{
+	this->~ForwardList();
+
+	_head = nullptr;
+
+	Node** curNode = &_head;
+	Node* sourceNode = source._head;
+
+	while (sourceNode != nullptr)
+	{
+		*curNode = new Node(sourceNode->_val);
+		curNode = &(*curNode)->_next;
+		sourceNode = sourceNode->_next;
+	}
+
+	return *this;
 }
 
 #pragma endregion

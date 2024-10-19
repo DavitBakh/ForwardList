@@ -3,7 +3,7 @@
 #include "Tests/3PopFrontTest.h"
 #include "Tests/4DestructorCallTest.h"
 #include "Tests/5CopyConstructorTest.h"
-//#include "Tests/6AssignmentOperatorTest.h"
+#include "Tests/6AssignmentOperatorTest.h"
 //#include "Tests/7DestructorWithAssignmentTest.h"
 //#include "Tests/8EmplaceFrontTest.h"
 //#include "Tests/9FrontTest.h"
@@ -21,10 +21,10 @@
 #include <iostream>
 #include <optional>
 
-int main() 
+int main()
 {
-  std::optional<std::string> msg; // just to make sure this works - click "Run".
-  msg = "All tests passed";
-  std::cout << *msg;
-  return 0;
+	std::optional<std::string> msg; // just to make sure this works - click "Run".
+	msg = "All tests passed";
+	std::cout << *msg;
+	return 0;
 }
