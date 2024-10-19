@@ -19,7 +19,7 @@ private:
 	Node* _head;
 
 public:
-	ForwardList(size_t size = 0, const T& val = T{});
+	ForwardList(size_t size = 0, const T& val = T());
 	ForwardList(const ForwardList& source);
 	~ForwardList();
 
@@ -45,41 +45,28 @@ ForwardList<T>::Node::Node(const T& val, Node* next) : _val(val), _next(next) { 
 template<typename T>
 ForwardList<T>::ForwardList(size_t size, const T& val)
 {
-	//TODO change logic to lection
 
-	if (size == 0)
-		return;
-
-	_head = new Node(val, nullptr);
-	Node* curr = _head;
-	for (size_t i = 1; i < size; i++)
+	Node** curNode = &_head;
+	for (std::size_t i = 0; i < size; i++)
 	{
-		curr->_next = new Node(val);
-		curr = curr->_next;
+		*curNode = new Node(val);
+		curNode = &(*curNode)->_next;
 	}
+
 }
 
 template<typename T>
 ForwardList<T>::ForwardList(const ForwardList& source)
 {
-	if (source._head == nullptr)
+	Node** curNode = &_head;
+	Node* sourceNode = source._head;
+
+	while (sourceNode != nullptr)
 	{
-		_head = nullptr;
-
-		return;
+		*curNode = new Node(sourceNode->_val);
+		curNode = &(*curNode)->_next;
+		sourceNode = sourceNode->_next;
 	}
-
-	this->_head = new Node(source._head->_val);
-
-	Node* temp = source._head->_next;
-	Node* ths = _head;
-	while (temp != nullptr)
-	{
-		ths->_next = new Node(temp->_val);
-		temp = temp->_next;
-		ths = ths->_next;
-	}
-
 
 }
 
