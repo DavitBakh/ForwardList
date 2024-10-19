@@ -5,7 +5,7 @@
 #include "Tests/5CopyConstructorTest.h"
 #include "Tests/6AssignmentOperatorTest.h"
 #include "Tests/7DestructorWithAssignmentTest.h"
-//#include "Tests/8EmplaceFrontTest.h"
+#include "Tests/8EmplaceFrontTest.h"
 //#include "Tests/9FrontTest.h"
 //#include "Tests/10ClearTest.h"
 //#include "Tests/11BasicIteratorTest.h"

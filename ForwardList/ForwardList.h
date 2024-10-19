@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cstddef>
+#include <utility>
 
 template <typename T>
 class ForwardList
@@ -27,9 +28,11 @@ public:
 
 	T& front();
 	const T& front() const;
-
 	void push_front(const T& val);
 	void pop_front() noexcept;
+
+	template <typename... Args>
+	void emplace_front(Args&&... args);
 
 	ForwardList& operator=(const ForwardList& source);
 
@@ -122,6 +125,13 @@ void ForwardList<T>::pop_front() noexcept
 	_head = _head->_next;
 
 	delete temp;
+}
+
+template<typename T>
+template<typename ...Args>
+void ForwardList<T>::emplace_front(Args && ...args)
+{
+	push_front(T(std::forward<Args>(args)...));
 }
 
 #pragma endregion
