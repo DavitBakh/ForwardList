@@ -30,6 +30,7 @@ public:
 	const T& front() const;
 	void push_front(const T& val);
 	void pop_front() noexcept;
+	void clear();
 
 	template <typename... Args>
 	void emplace_front(Args&&... args);
@@ -128,6 +129,12 @@ void ForwardList<T>::pop_front() noexcept
 }
 
 template<typename T>
+void ForwardList<T>::clear()
+{
+	this->~ForwardList();
+}
+
+template<typename T>
 template<typename ...Args>
 void ForwardList<T>::emplace_front(Args && ...args)
 {
@@ -166,8 +173,6 @@ template<typename T>
 ForwardList<T>& ForwardList<T>::operator=(const ForwardList& source)
 {
 	this->~ForwardList();
-
-	_head = nullptr;
 
 	Node** curNode = &_head;
 	Node* sourceNode = source._head;

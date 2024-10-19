@@ -7,7 +7,7 @@
 #include "Tests/7DestructorWithAssignmentTest.h"
 #include "Tests/8EmplaceFrontTest.h"
 #include "Tests/9FrontTest.h"
-//#include "Tests/10ClearTest.h"
+#include "Tests/10ClearTest.h"
 //#include "Tests/11BasicIteratorTest.h"
 //#include "Tests/12ConstIteratorTest.h"
 //#include "Tests/13MemberAccessIteratorTest.h"
