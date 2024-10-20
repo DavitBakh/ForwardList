@@ -10,7 +10,7 @@
 #include "Tests/10ClearTest.h"
 #include "Tests/11BasicIteratorTest.h"
 #include "Tests/12ConstIteratorTest.h"
-//#include "Tests/13MemberAccessIteratorTest.h"
+#include "Tests/13MemberAccessIteratorTest.h"
 //#include "Tests/14InitializerListConstructorTest.h"
 //#include "Tests/15IteratorConstructibleTest.h"
 //#include "Tests/16ClassWithNoDefaultConstructorTest.h"
