@@ -43,12 +43,33 @@ public:
 	public:
 		iterator(Node* ptr);
 
-		T& operator*();
+		reference operator*() const;
 		iterator& operator++();
 		iterator operator++(int);
-		bool operator==(const iterator& other);
-		bool operator!=(const iterator& other);
+		bool operator==(const iterator& other) const;
+		bool operator!=(const iterator& other) const;
 		
+	};
+
+	class const_iterator
+	{
+		using value_type = T;
+		using difference_type = std::ptrdiff_t;
+		using pointer = const T*;
+		using reference = const T&;
+		using iterator_category = std::forward_iterator_tag;
+
+	private:
+		const Node * _current;
+
+	public:
+		const_iterator(const Node* ptr);
+
+		reference  operator*() const;
+		iterator& operator++();
+		iterator operator++(int);
+		bool operator==(const iterator& other) const;
+		bool operator!=(const iterator& other) const;
 	};
 
 #pragma endregion
@@ -68,6 +89,8 @@ public:
 	void clear();
 	iterator begin();
 	iterator end();
+	const_iterator begin() const;
+	const_iterator end() const;
 
 
 	template <typename... Args>
@@ -143,10 +166,13 @@ ForwardList<T>::~ForwardList()
 template<typename T>
 ForwardList<T>::iterator::iterator(Node* ptr) : _current(ptr) {}
 
+template<typename T>
+ForwardList<T>::const_iterator::const_iterator(const Node* ptr) : _current(ptr) {}
+
 
 #pragma endregion
 
-#pragma region Iterators
+#pragma region Iterator
 
 template<typename T>
 ForwardList<T>::iterator ForwardList<T>::begin()
@@ -161,7 +187,7 @@ ForwardList<T>::iterator ForwardList<T>::end()
 }
 
 template<typename T>
-T& ForwardList<T>::iterator::operator*()
+ForwardList<T>::iterator::reference ForwardList<T>::iterator::operator*() const
 {
 	return _current->_val;
 }
@@ -183,19 +209,70 @@ ForwardList<T>::iterator ForwardList<T>::iterator::operator++(int)
 
 
 template<typename T>
-bool ForwardList<T>::iterator::operator==(const ForwardList<T>::iterator& other)
+bool ForwardList<T>::iterator::operator==(const ForwardList<T>::iterator& other) const
 {
 	return this->_current == other._current;
 }
 
 template<typename T>
-bool ForwardList<T>::iterator::operator!=(const ForwardList<T>::iterator& other)
+bool ForwardList<T>::iterator::operator!=(const ForwardList<T>::iterator& other) const
 {
 	return this->_current != other._current;
 }
 
 
 #pragma endregion
+
+#pragma region ConstIterator
+
+
+template<typename T>
+ForwardList<T>::const_iterator ForwardList<T>::begin() const
+{
+	return const_iterator(_head);
+}
+
+template<typename T>
+ForwardList<T>::const_iterator ForwardList<T>::end() const
+{
+	return const_iterator(nullptr);
+}
+
+template<typename T>
+ForwardList<T>::const_iterator::reference ForwardList<T>::const_iterator::operator*() const
+{
+	return _current->_val;
+}
+
+template<typename T>
+ForwardList<T>::iterator& ForwardList<T>::const_iterator::operator++() 
+{
+	_current = _current->_next;
+	return *this;
+}
+
+template<typename T>
+ForwardList<T>::iterator ForwardList<T>::const_iterator::operator++(int)
+{
+	iterator result(*this);
+	++(*this);
+	return result;
+}
+
+template<typename T>
+bool ForwardList<T>::const_iterator::operator==(const iterator& other) const
+{
+	return this->_current == other._current;
+}
+
+template<typename T>
+bool ForwardList<T>::const_iterator::operator!=(const iterator& other) const
+{
+	return this->_current != other._current;
+}
+
+#pragma endregion
+
 
 
 #pragma region Temp
